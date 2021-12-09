@@ -18,7 +18,7 @@ function Inlog(){
         $password = $_POST['psw'];
         $hashed = hash('sha256', $password);
 
-        $sql = 'SELECT email, password, Voornaam, Tussenvoegsel, Achternaam FROM gebruikers WHERE email = :email';
+        $sql = 'SELECT idGebruikers, email, password, Voornaam, Tussenvoegsel, Achternaam FROM gebruikers WHERE email = :email';
         $statement = $pdo->prepare($sql);
         $statement->bindParam(':email', $email);
         $statement->execute([
@@ -30,6 +30,7 @@ function Inlog(){
         if(is_array($user)){
             
             if($user['password'] == $hashed){
+                $_SESSION['idGebruikers'] = $user['idGebruikers'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['loggedin'] = TRUE;
 
@@ -39,7 +40,8 @@ function Inlog(){
                 // $_SESSION['Tussenvoegsel'] = $user['tussenvoegsel'];
                 // $_SESSION['Achternaam'] = $user['achternaam'];
 
-                 require_once'templates/ingelogd.php';
+                //  require_once'templates/ingelogd.php';
+                header('location: home');
             }else{
                 require_once'templates/foutinlog.php';
             }
@@ -84,6 +86,32 @@ function Registreren(){
             ':achternaam' => $Achter
         ]);
         header('Location: inloggen');
+
+}
+
+function inklokken(){
+    $pdo = require_once('secure/connect.php');
+    require 'secure/config.php';
+
+
+    $stmt = $pdo->prepare("SELECT idomschrijving, Naam FROM omschrijving");
+    $stmt->execute();
+
+    $drop = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    
+    
+    return $drop;
+
+
+
+
+    // echo '<select name="DROP DOWN NAME">';
+    // while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+    //    echo '<option value="'.$row['idomschrijving'].'">'.$row['Naam'].'</option>';
+    // }
+    // echo '</select>';
+
 
 }
 

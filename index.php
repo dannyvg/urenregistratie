@@ -19,6 +19,8 @@ if(isset($_POST['form'])){
 switch($params[1]){
 
     case 'home':
+        $dropp = inklokken();
+        $message = test();
         include_once "templates/ingelogd.php"; 
         break;
     case 'projecten':

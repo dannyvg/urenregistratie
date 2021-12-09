@@ -14,4 +14,3 @@ require 'config.php';
         {
             die($e->getMessage());
         }
-?>

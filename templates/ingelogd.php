@@ -16,26 +16,9 @@ if (!isset($_SESSION['loggedin'])) {
 </head>
 <body>
 
-<nav role="navigation">
-  <div id="menuToggle">
-    <input type="checkbox" class="box" />
-    <span></span>
-    <span></span>
-    <span></span>
-    
-    <ul id="menu">
-      <a href="#"><li>Home</li></a>
-      <a href="#"><li>About</li></a>
-      <a href="#"><li>Info</li></a>
-      <a href="#"><li>Contact</li></a>
-      <a href="#" target="_blank"><li>Show me more</li></a>
-    </ul>
-  </div>
-</nav>
-
-<div class="btn-uitlog">
-  <a href="http://localhost/Urenregistratie/uitloggen">Uitloggen</a>
-</div>  
+<?php
+include 'menu.php';
+?>
 
 <div class="welkom">
   <?php 
@@ -45,7 +28,29 @@ if (!isset($_SESSION['loggedin'])) {
   echo  $_SESSION['Tussenvoegsel'];
   echo  $_SESSION['Achternaam'];
   ?>
+  
 </div>
+<br>
+<form action="index.php" method="post">
+        <div class="container" style="text-align: center;">
+
+          <?php
+          echo '<select name="Dropdown">';
+            foreach ($dropp as $p) {
+              echo '<option value="'.$p['idomschrijving'].'">'.$p['Naam'].'</option>';
+            }
+   
+          echo '</select>';
+  //   foreach ($dropp as $p) {
+  //     echo $p['Naam'] . '<br>';
+  // }
+          ?>
+            <br>
+            <input type="hidden" name="form" value='1'>
+
+            <button type="submit">Inklokken</button>
+        </div>
+</form>
     
 </body>
 </html>
